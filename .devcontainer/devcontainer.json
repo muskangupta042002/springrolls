@@ -1,24 +1,20 @@
 {
   "name": "Java",
   // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-  "image": "mcr.microsoft.com/devcontainers/java:0-17",
-
+  "image": "mcr.microsoft.com/devcontainers/java:17",
   "features": {
     "ghcr.io/devcontainers/features/java:1": {
       "version": "17",
-      "installMaven": "true",
-      "installGradle": "false",
-      "installAnt": "latest"
+      "installMaven": "true"
     },
     "ghcr.io/devcontainers-contrib/features/ant-sdkman:2": {}
   },
-
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
-  // "forwardPorts": [5432, 9000],
-
+  "forwardPorts": [
+    5432
+  ],
   // Use 'postCreateCommand' to run commands after the container is created.
   "postCreateCommand": "java -version && git --version",
-
   // Configure tool-specific properties.
   "customizations": {
     // Configure properties specific to VS Code.
@@ -26,7 +22,11 @@
       // Add the IDs of extensions you want installed when the container is created.
       "extensions": [
         "streetsidesoftware.code-spell-checker",
-        "vscjava.vscode-java-pack"
+        "vscjava.vscode-java-pack",
+        "vmware.vscode-boot-dev-pack",
+        "redhat.vscode-xml",
+        "redhat.fabric8-analytics",
+        "HTMLHint.vscode-htmlhint"
       ]
     }
   }
