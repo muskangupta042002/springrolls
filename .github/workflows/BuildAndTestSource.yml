@@ -25,6 +25,7 @@ jobs:
       - name: Build with Maven
         run: mvn -B package --file pom.xml
       - name: Test with Maven
+        if: github.event_name == 'pull_request' && github.event.action != 'closed'
         run: mvn test
       - name: Set up SSH Key
         run: |
@@ -42,9 +43,9 @@ jobs:
             echo "Switching to application directory"          
             cd springrolls
             echo "Stopping the existing application"
-            pkill -f "java -jar springrolls-0.0.1-SNAPSHOT.jar"
+            pkill -f "java -jar ${{ secrets.TARGET_DIR }}/springrolls-0.0.1-SNAPSHOT.jar"
             echo "Start the new version of the application"
-            nohup java -jar springrolls-0.0.1-SNAPSHOT.jar > /dev/null 2>&1 &
+            nohup java -jar ${{ secrets.TARGET_DIR }}/springrolls-0.0.1-SNAPSHOT.jar > /dev/null 2>&1 &
             echo "Application Started!!!"
             exit
             EOF
