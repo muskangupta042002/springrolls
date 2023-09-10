@@ -23,10 +23,8 @@ jobs:
           distribution: "temurin"
           cache: maven
       - name: Build with Maven
-        if: github.event_name == 'pull_request' && github.event.action != 'closed'
         run: mvn -B package --file pom.xml
       - name: Test with Maven
-        if: github.event_name == 'pull_request' && github.event.action != 'closed'
         run: mvn test
       - name: Set up SSH Key
         run: |
