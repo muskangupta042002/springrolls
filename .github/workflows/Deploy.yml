@@ -2,8 +2,11 @@ name: Deploy to EC2
 
 on:
   pull_request:
-    types: [closed]
-    branches: ["main"]
+    types: [closed]  # Trigger on pull request closure
+  workflow_run:
+    workflows: ["Build and Test"]
+    types:
+      - completed
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -17,6 +20,8 @@ jobs:
         run: |
           echo "${{ secrets.DEV_KEY_PAIR }}" >> SpringKeyPair.pem
           chmod 400 SpringKeyPair.pem
+      - name: List files
+        run: ls -R    
       - name: Download JAR Artifact
         uses: actions/download-artifact@v3
         with:
