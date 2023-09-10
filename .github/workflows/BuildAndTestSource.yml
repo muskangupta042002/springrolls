@@ -28,6 +28,10 @@ jobs:
       - name: Test with Maven
         if: github.event_name == 'pull_request' && github.event.action != 'closed'
         run: mvn test
+      - name: Set up SSH Key
+        run: |
+          echo "${{ secrets.DEV_KEY_PAIR }}" >> SpringKeyPair.pem
+          chmod 400 SpringKeyPair.pem
       - name: Deploy to EC2
         if: github.event.pull_request.merged == true
         run: |
