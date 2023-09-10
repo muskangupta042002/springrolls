@@ -32,7 +32,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: springrolls
-          path: ${{ secrets.JAR_FILE }}     
+          path: ${{ secrets.JAR_FILE }}
 
   deploy:
     runs-on: ubuntu-latest
@@ -47,7 +47,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: springrolls
-          path: .          
+          path: ${{ secrets.JAR_FILE }}
       - name: Deploy to EC2
         if: github.event.pull_request.merged == true
         run: |
