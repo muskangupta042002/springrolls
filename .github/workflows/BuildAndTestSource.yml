@@ -41,7 +41,10 @@ jobs:
       - name: Deploy to EC2
         if: github.event.pull_request.merged == true
         run: |
+          echo "Copying jar to EC2 Instance..."
           scp -i "SpringKeyPair.pem" -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${{ secrets.JAR_FILE }} ${{ secrets.DEV_INSTANCE_IP }}:${{ secrets.TARGET_DIR }}
+          echo "Jar Copied successfully!!!"
+          echo "Attempting logging to machine..."
           # SSH into the EC2 instance and restart the application
           ssh -i "SpringKeyPair.pem" -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${{ secrets.DEV_INSTANCE_IP }} <<EOF
             echo "Switching to application directory"          
