@@ -23,7 +23,7 @@ jobs:
           cache: maven
       - name: Build with Maven
         if: github.event_name == 'pull_request' && github.event.action != 'closed'
-        run: mvn -B package --file pom.xml
+        run: mvn -B package --file pom.xml && ls -R
       - name: Test with Maven
         if: github.event_name == 'pull_request' && github.event.action != 'closed'
         run: mvn test
@@ -32,7 +32,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: springrolls
-          path: ${{ secrets.JAR_FILE }}
+          path: target/springrolls-0.0.1-SNAPSHOT.jar
 
   deploy:
     runs-on: ubuntu-latest
@@ -51,8 +51,9 @@ jobs:
       - name: Deploy to EC2
         if: github.event.pull_request.merged == true
         run: |
+          ls -R
           echo "Copying jar to EC2 Instance..."
-          scp -i "SpringKeyPair.pem" -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${{ secrets.JAR_FILE }} ${{ secrets.DEV_INSTANCE_IP }}:${{ secrets.TARGET_DIR }}
+          scp -i "SpringKeyPair.pem" -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no target/springrolls.jar ${{ secrets.DEV_INSTANCE_IP }}:${{ secrets.TARGET_DIR }}
           echo "Jar Copied successfully!!!"
           echo "Attempting logging to machine..."
           # SSH into the EC2 instance and restart the application
