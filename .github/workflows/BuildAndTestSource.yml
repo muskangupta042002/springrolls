@@ -13,7 +13,6 @@ on:
 jobs:
   build_test:
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request' && github.event.action != 'closed'
     steps:
       - uses: actions/checkout@v3
       - name: Set up JDK 17
@@ -23,10 +22,13 @@ jobs:
           distribution: "temurin"
           cache: maven
       - name: Build with Maven
+        if: github.event_name == 'pull_request' && github.event.action != 'closed'
         run: mvn -B package --file pom.xml
       - name: Test with Maven
+        if: github.event_name == 'pull_request' && github.event.action != 'closed'
         run: mvn test
       - name: Upload JAR as Artifact
+        if: github.event_name == 'pull_request' && github.event.action != 'closed'
         uses: actions/upload-artifact@v2
         with:
           name: springrolls
