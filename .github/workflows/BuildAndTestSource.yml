@@ -47,7 +47,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: springrolls
-          path: ${{ secrets.JAR_FILE }}
+          path: .
       - name: Deploy to EC2
         if: github.event.pull_request.merged == true
         run: |

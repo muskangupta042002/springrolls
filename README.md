@@ -1,1 +1,2 @@
 # springrolls
+[![Build Test and Deploy](https://github.com/muskangupta042002/springrolls/actions/workflows/BuildAndTestSource.yml/badge.svg)](https://github.com/muskangupta042002/springrolls/actions/workflows/BuildAndTestSource.yml)
